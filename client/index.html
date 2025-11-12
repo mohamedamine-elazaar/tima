@@ -17,25 +17,17 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      // Conditionally inject analytics if configured at build time
-      (function () {
-        var endpoint = "%VITE_ANALYTICS_ENDPOINT%";
-        var websiteId = "%VITE_ANALYTICS_WEBSITE_ID%";
-        var looksLikePlaceholder = function (s) {
-          return typeof s === "string" && /^%.*%$/.test(s);
-        };
-        if (
-          endpoint && websiteId &&
-          !looksLikePlaceholder(endpoint) && !looksLikePlaceholder(websiteId)
-        ) {
-          var s = document.createElement("script");
-          s.defer = true;
-          s.src = endpoint.replace(/\/$/, "") + "/umami";
-          s.setAttribute("data-website-id", websiteId);
-          document.head.appendChild(s);
-        }
-      })();
+    <script type="module">
+      // Conditionally inject analytics if configured via Vite env
+  const endpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT;
+  const websiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID;
+      if (endpoint && websiteId) {
+        const s = document.createElement("script");
+        s.defer = true;
+        s.src = endpoint.replace(/\/$/, "") + "/umami";
+        s.setAttribute("data-website-id", websiteId);
+        document.head.appendChild(s);
+      }
     </script>
   </body>
 
