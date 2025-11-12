@@ -1,4 +1,6 @@
-export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+// Frontend-only constants (inlined to avoid shared backend imports)
+export const COOKIE_NAME = "app_session_id";
+export const ONE_YEAR_MS = 1000 * 60 * 60 * 24 * 365;
 
 export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "App";
 
